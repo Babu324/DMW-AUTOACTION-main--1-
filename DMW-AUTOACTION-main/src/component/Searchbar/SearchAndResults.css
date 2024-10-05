@@ -1,0 +1,123 @@
+/* Center text styles */
+.text-center {
+  text-align: center;
+}
+
+/* Adjustments for model and year sections */
+.model-section, .year-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Change label color */
+.label {
+  color: red;
+  font-weight: bold;
+}
+
+/* Optional: Adjust the vehicle inner styles if needed */
+.vehicle-inner {
+  font-size: 16px;
+}
+
+/* General Styles */
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 5px;
+  color: #2c2c2c;
+}
+
+/* Enquiry Section Styles */
+.enquiry-section {
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 2px 5px rgba(0, 0, 0, 0.19);
+  margin: 5px;
+}
+
+/* Flexbox for Two Columns */
+.results-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+/* Columns */
+.col {
+  flex: 1;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Title Tag Styles */
+.title-tag {
+  font-weight: bold;
+  color: var(--blue);
+}
+
+/* Part Section Styles */
+.part-section {
+  margin-top: 5px;
+}
+
+/* Dropdown Styles */
+#parts-list {
+  padding: 3px;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+}
+
+/* Vehicle Details Section */
+.vehicle-details {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Vehicle Logo Styles */
+.vehicle-logo {
+  text-align: center;
+}
+
+.vehicle-logo img {
+  max-width: 70%;
+  height: auto;
+}
+
+/* Additional Info Styles */
+.form-group {
+  margin-top: 3px;
+}
+
+textarea {
+  resize: none;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  padding: 3px;
+}
+
+.remove-border {
+  border: none;
+  background-color: #f8f9fa;
+}
+
+/* Part Preview Styles */
+.part-preview ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.part-preview li {
+  margin-bottom: 2px;
+  padding: 3px;
+  background-color: #e9ecef;
+  border-radius: 3px;
+}
+
+/* No Parts Found Message */
+.part-preview p {
+  color: #6c757d;
+}

@@ -1,3 +1,4 @@
+// index.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -5,6 +6,7 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const authRoutes = require('./src/routes/auth'); // Correct path to auth.js
 const businessRoutes = require('./src/routes/business'); // Correct path to business.js
+const partRoutes = require('./src/routes/part'); // Correct path to part.js
 const fs = require('fs'); // Import fs for file system operations
 const path = require('path'); // Import path to handle file paths
 const helmet = require('helmet'); // Security middleware (optional)
@@ -63,12 +65,21 @@ app.use(helmet()); // Optional: Enhance security with helmet
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
+  .then(async () => {
+    console.log('Connected to MongoDB');
+
+    // Run seed data
+    const seedDatabase = require('./seed'); // Correct path to seed.js
+    await seedDatabase(); // Call the seed function
+
+    // Continue with other server logic here...
+  })
   .catch(err => console.error('Failed to connect to MongoDB:', err));
 
 // Define your routes here
 app.use('/api/auth', authRoutes); // Register the auth routes with the /api/auth prefix
 app.use('/api/business', businessRoutes); // Register the business routes with the /api/business prefix
+app.use('/api/parts', partRoutes); // Register the part routes with the /api/parts prefix
 
 // Home route
 app.get('/', (req, res) => {
