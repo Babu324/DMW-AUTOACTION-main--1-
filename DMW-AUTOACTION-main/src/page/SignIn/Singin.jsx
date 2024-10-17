@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "./SignIn.css";
-
-// Import the logo directly using the correct path
 import logo from '../../assets/AutoAction DMW Logo.png'; // Adjust the path as necessary
 
 function SignIn() {
@@ -12,33 +10,35 @@ function SignIn() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError(''); // Clear previous errors
 
-        axios.post('http://localhost:3001/api/auth/login', { email, password })
-            .then(result => {
-                console.log(result);
-                navigate('/'); // Navigate to your desired route
-            })
-            .catch(err => {
-                console.error(err);
-                if (err.response && err.response.data && err.response.data.errors) {
-                    setError(err.response.data.errors[0].msg); // Display the specific error message
-                } else {
-                    setError('Login failed. Please try again.');
-                }
-            });
+        try {
+            const response = await axios.post('http://localhost:3001/api/auth/login', { email, password });
+            const { token } = response.data; // Assume your API returns a token in this format
+            localStorage.setItem('authToken', token); // Store the token in localStorage
+
+            // Navigate to UserHome after successful login
+            navigate('/userhome'); // Ensure your route is set correctly
+        } catch (err) {
+            console.error(err);
+            if (err.response && err.response.data && err.response.data.errors) {
+                setError(err.response.data.errors[0].msg); // Display the specific error message
+            } else {
+                setError('Login failed. Please try again.');
+            }
+        }
     };
 
     return (
         <div className="LR-page">
             <div className="login-box">
-                <img src={logo} alt="Logo" className="logo" /> {/* Add logo here */}
+                <img src={logo} alt="Logo" className="logo" />
                 <h2>Login</h2>
                 <p>Please enter your credentials:</p>
 
-                {error && <div className="alert">{error}</div>} {/* Display error if exists */}
+                {error && <div className="alert">{error}</div>}
 
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -76,4 +76,4 @@ function SignIn() {
     );
 }
 
-export default SignIn;  // Exporting as SignIn
+export default SignIn;

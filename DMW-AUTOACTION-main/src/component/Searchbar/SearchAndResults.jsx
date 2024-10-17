@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
-import Navbar from "../Navbar/Navbar"; // Adjust the path if needed
-import Footer from "../Footer/Footer"; // Adjust the path if needed
+import { useLocation, useNavigate } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
 import './SearchAndResults.css';
 
 const SearchAndResultsPage = () => {
   const location = useLocation();
-  const { results, make, model, year } = location.state || { results: [], make: "", model: "", year: "" };
+  const { make, model, year } = location.state || { make: "", model: "", year: "" };
 
   const [selectedPart, setSelectedPart] = useState("");
+  const [selectedPartName, setSelectedPartName] = useState(""); 
+  const [selectedParts, setSelectedParts] = useState([]);
+  
+  const navigate = useNavigate();  // For navigation
 
   const partsList = [
     { value: "", label: "Type part name e.g belt, light" },
@@ -31,32 +35,54 @@ const SearchAndResultsPage = () => {
   ];
 
   const handlePartChange = (event) => {
-    setSelectedPart(event.target.value);
+    const selectedValue = event.target.value;
+    const selectedLabel = partsList.find(part => part.value === selectedValue)?.label || "";
+    setSelectedPart(selectedValue);
+    setSelectedPartName(selectedLabel);
   };
 
   const handleAddPart = () => {
-    if (selectedPart) {
-      // Handle the addition of the selected part here
-      alert(`Added part: ${selectedPart}`);
-      // You might want to also update the results or state accordingly
+    if (selectedPart && selectedPartName) {
+      setSelectedParts([...selectedParts, { id: selectedPart, name: selectedPartName }]);
+      setSelectedPart("");
+      setSelectedPartName(""); 
     } else {
       alert("Please select a part to add.");
     }
   };
 
+  const handleRemovePart = (partId) => {
+    setSelectedParts(selectedParts.filter(part => part.id !== partId));
+  };
+
+  const handleNext = () => {
+    if (selectedParts.length > 0) {
+      navigate("/personaldetail", {
+        state: {
+          make,
+          model,
+          year,
+          selectedParts,
+        },
+      });
+    } else {
+      alert("Please add at least one part.");
+    }
+  };
+
   return (
     <div>
-      <Navbar /> {/* Include the Navbar */}
+      <Navbar />
+      
       <div className="results-container">
-        {/* Search Parts Section */}
-        <div className="col enquiry-section first-section first-step-part">
+        <div className="col enquiry-section first-section">
           <div>
-            <div className="enquiry-title">
-              <h5><span className="title-tag">Search parts</span></h5>
+            <div className="enquiry-title text-center">
+              <h5><span className="title-tag">Search Parts</span></h5>
             </div>
             <div className="part-section">
-              <div className="row">
-                <div className="form-group col-md-10" id="part-list-section">
+              <div className="row align-items-center">
+                <div className="form-group col-md-10">
                   <select
                     id="parts-list"
                     className="form-control"
@@ -70,7 +96,7 @@ const SearchAndResultsPage = () => {
                     ))}
                   </select>
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-2 text-center">
                   <button type="button" className="btn btn-add-part" onClick={handleAddPart}>
                     Add
                   </button>
@@ -80,10 +106,10 @@ const SearchAndResultsPage = () => {
           </div>
         </div>
 
-        {/* Results Section */}
         <div className="col enquiry-section second-section">
           <div className="enquiry-title">
-            <h5><span className="title-tag">Selected Vehicle Details</span></h5>
+            <h5 className="selected-vehicle-title"><span className="title-tag">Selected Vehicle Details</span></h5>
+            <hr className="underline" />
           </div>
           <div className="enquiry-inner-details">
             <div className="row">
@@ -92,10 +118,13 @@ const SearchAndResultsPage = () => {
               </div>
             </div>
 
-            {/* New part details section with logo and model/year */}
             <div className="part-details-section row">
               <div className="vehicle-logo col-md-3 text-center">
-                <img src="https://www.selectusedparts.com/assets/images/2019/08/20190511_101154.gif" alt="Vehicle Logo" className="vehicle-img" />
+                <img
+                  src="https://www.selectusedparts.com/assets/images/2019/08/20190511_101154.gif"
+                  alt="Vehicle Logo"
+                  className="vehicle-img"
+                />
               </div>
               <div className="vehicle-details col-md-9 text-center">
                 <div className="row">
@@ -111,39 +140,57 @@ const SearchAndResultsPage = () => {
               </div>
             </div>
 
-            <div className="part-enq-sec">
-              <div className="row">
+            {selectedParts.length > 0 && (
+              <div className="part-section row">
                 <div className="col-md-12">
-                  <div className="part-details enquiry-title">
-                    <h5><span className="title-tag">Selected Parts</span></h5>
-                  </div>
-                  <div id="part-preview" className="part-preview enquiry-title">
-                    {results.length > 0 ? (
-                      <ul>
-                        {results.map((part) => (
-                          <li key={part._id}>
-                            {part.partName} ({part.condition}) - ₹{part.price}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p>No parts found for the selected criteria.</p>
-                    )}
-                  </div>
+                  <h5 className="label" style={{ color: 'blue' }}>SELECTED PARTS</h5>
+                  <ul>
+                    {selectedParts.map((part) => (
+                      <li key={part.id} className="selected-part">
+                        {part.name} 
+                        <button 
+                          className="remove-part-btn" 
+                          onClick={() => handleRemovePart(part.id)}
+                        >
+                          X
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-            </div>
+            )}
 
             <div className="row">
               <div className="col-md-12 form-group">
                 <h5 className="enquiry-title"><span className="title-tag">Any additional info (optional):</span></h5>
-                <textarea name="additional_info" rows="1" className="form-control remove-border" placeholder="Type here..."></textarea>
+                <textarea name="additional_info" rows="1" className="form-control remove-border" placeholder="Type additional info here..."></textarea>
               </div>
             </div>
+
+            {selectedParts.length > 0 && (
+              <div className="row">
+                <div className="col-md-12 text-center">
+                  <button className="btn btn-next" onClick={handleNext}>
+                    Next
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
-      <Footer /> {/* Include the Footer */}
+
+      <a 
+        href="https://api.whatsapp.com/send?phone=+91 94746 62684" 
+        className="whatsapp-link" 
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        Chat on WhatsApp
+      </a>
+      
+      <Footer />
     </div>
   );
 };

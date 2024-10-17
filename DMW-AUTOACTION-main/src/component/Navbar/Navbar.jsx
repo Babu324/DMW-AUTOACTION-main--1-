@@ -40,7 +40,7 @@ function Navbar() {
             <MdAccountCircle className="icon" />
             <div>
               <span className="signin">
-                <Link to="/signin">SIGN-IN</Link>
+                <Link to="/login">SIGN-IN</Link>
               </span>
               <br />
               <span className="text_sm">Lead Area</span>
@@ -48,11 +48,10 @@ function Navbar() {
           </li>
           <Button
           className='Supplier'
-          width="12rem"
+          width="11rem"
           text="Become A Supplier➡"
-          height="2.5rem"
-          fontSize="0.5rem"
-          fontWeight="200"
+          height="3rem"
+          fontSize="1rem"
           background="#00000"
           color="#FFFFFF"
           event={() => {

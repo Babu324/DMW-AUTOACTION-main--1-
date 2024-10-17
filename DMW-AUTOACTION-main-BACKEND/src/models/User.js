@@ -22,10 +22,9 @@ const indianPhoneValidator = (value) => {
   return indianPhoneRegex.test(value);
 };
 
-// Function to validate medium password
 const mediumPasswordValidator = (value) => {
-  // Minimum 8 characters, at least one lowercase letter
-  const passwordRegex = /^(?=.*[a-z]).{8,}$/;
+  // Minimum 8 characters, at least one lowercase letter, and one special character
+  const passwordRegex = /^(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{8,}$/;
   return passwordRegex.test(value);
 };
 

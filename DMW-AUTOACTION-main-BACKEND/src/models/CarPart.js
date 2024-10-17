@@ -1,14 +1,21 @@
 const mongoose = require('mongoose');
 
-const carPartSchema = new mongoose.Schema({
+// Define schema for storing selected car part details
+const carPartSelectionSchema = new mongoose.Schema({
   make: { type: String, required: true },
   model: { type: String, required: true },
   year: { type: String, required: true },
-  partName: { type: String, required: true },
-  condition: { type: String, required: true },
-  price: { type: Number, required: true },
-  availability: { type: Boolean, required: true },
+  selectedParts: [
+    {
+      partId: { type: String, required: true },
+      partName: { type: String, required: true },
+    },
+  ],
+  additionalInfo: { type: String, default: '' },
+  createdAt: { type: Date, default: Date.now },
 });
 
-const CarPart = mongoose.model('CarPart', carPartSchema);
-module.exports = CarPart;
+// Create a model based on the schema
+const CarPartSelection = mongoose.model('CarPartSelection', carPartSelectionSchema);
+
+module.exports = CarPartSelection;

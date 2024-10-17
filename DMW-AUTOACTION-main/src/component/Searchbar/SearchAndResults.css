@@ -1,123 +1,114 @@
-/* Center text styles */
-.text-center {
-  text-align: center;
+:root {
+  --blue: #007bff;
+  --red: #dc3545;
+  --green: #25D366; /* Added green variable for WhatsApp */
+  --font-family-sans-serif: 'Open Sans', sans-serif;
+  --gray-dark: #343a40;
 }
 
-/* Adjustments for model and year sections */
-.model-section, .year-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Change label color */
-.label {
-  color: red;
-  font-weight: bold;
-}
-
-/* Optional: Adjust the vehicle inner styles if needed */
-.vehicle-inner {
-  font-size: 16px;
-}
-
-/* General Styles */
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-family-sans-serif);
   background-color: #f8f9fa;
+  color: var(--gray-dark);
   margin: 0;
   padding: 5px;
-  color: #2c2c2c;
 }
 
-/* Enquiry Section Styles */
-.enquiry-section {
-  padding: 10px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 2px 5px rgba(0, 0, 0, 0.19);
-  margin: 5px;
-}
-
-/* Flexbox for Two Columns */
 .results-container {
   display: flex;
   justify-content: space-between;
-  margin-top: 5px;
+  margin-top: 20px;
+  gap: 20px;
 }
 
-/* Columns */
 .col {
   flex: 1;
-  padding: 0;
-  box-sizing: border-box;
+  padding: 10px;
 }
 
-/* Title Tag Styles */
-.title-tag {
-  font-weight: bold;
-  color: var(--blue);
+.enquiry-section {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 2px 5px rgba(0, 0, 0, 0.19);
 }
 
-/* Part Section Styles */
+.enquiry-title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.selected-vehicle-title {
+  font-size: 1.5rem; /* Increase the font size */
+  text-decoration: underline; /* Underline the title */
+}
+
+.underline {
+  border-top: 2px solid var(--blue);
+  width: 50%;
+  margin: 10px auto; /* Center the underline */
+}
+
 .part-section {
-  margin-top: 5px;
+  padding-top: 20px;
 }
 
-/* Dropdown Styles */
 #parts-list {
-  padding: 3px;
+  width: 100%;
+  padding: 8px;
   border: 1px solid #ced4da;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
-/* Vehicle Details Section */
-.vehicle-details {
-  display: flex;
-  flex-direction: column;
+.btn-add-part {
+  background-color: var(--blue);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  font-size: 0.875rem;
 }
 
-/* Vehicle Logo Styles */
-.vehicle-logo {
+.btn-add-part:hover {
+  background-color: #0056b3;
+}
+
+.vehicle-details,
+.model-section,
+.year-section {
   text-align: center;
 }
 
 .vehicle-logo img {
-  max-width: 70%;
+  max-width: 50%; /* Reduce the image size */
   height: auto;
 }
 
-/* Additional Info Styles */
-.form-group {
-  margin-top: 3px;
-}
-
-textarea {
-  resize: none;
-  border: 1px solid #ced4da;
-  border-radius: 3px;
-  padding: 3px;
-}
-
-.remove-border {
-  border: none;
-  background-color: #f8f9fa;
-}
-
-/* Part Preview Styles */
 .part-preview ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
 }
 
 .part-preview li {
-  margin-bottom: 2px;
-  padding: 3px;
   background-color: #e9ecef;
-  border-radius: 3px;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
 }
 
-/* No Parts Found Message */
-.part-preview p {
-  color: #6c757d;
+.whatsapp-link {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  padding: 10px 20px;
+  background-color: var(--green);
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.3s; /* Smooth transition */
 }
+
+.whatsapp-link:hover {
+  background-color: #128C7E; /* Slightly darker shade on hover */
+}
+

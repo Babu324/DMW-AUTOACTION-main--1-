@@ -5,21 +5,25 @@ const Part = require('../models/CarPart');
 // Fetch parts by make, model, and year
 router.get('/search', async (req, res) => {
   try {
+    // Trim input values to remove any leading or trailing whitespace
     const { make, model, year } = req.query;
+    const trimmedMake = make.trim();
+    const trimmedModel = model.trim();
+    const trimmedYear = year.trim();
 
     // Validate that all necessary parameters are provided
-    if (!make || !model || !year) {
+    if (!trimmedMake || !trimmedModel || !trimmedYear) {
       return res.status(400).json({ message: 'Please provide make, model, and year' });
     }
 
     // Debugging output
-    console.log(`Searching for parts with make: ${make}, model: ${model}, year: ${year}`);
+    console.log(`Searching for parts with make: ${trimmedMake}, model: ${trimmedModel}, year: ${trimmedYear}`);
 
     // Find parts matching the search criteria (case-insensitive)
     const parts = await Part.find({
-      make: { $regex: new RegExp(make, 'i') },
-      model: { $regex: new RegExp(model, 'i') },
-      year: String(year) // Ensure the year is a string
+      make: { $regex: new RegExp(trimmedMake, 'i') },
+      model: { $regex: new RegExp(trimmedModel, 'i') },
+      year: String(trimmedYear) // Ensure the year is a string
     });
 
     // Check if any parts were found

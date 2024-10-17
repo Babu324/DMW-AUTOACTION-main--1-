@@ -1,4 +1,3 @@
-// index.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -7,6 +6,8 @@ const dotenv = require('dotenv');
 const authRoutes = require('./src/routes/auth'); // Correct path to auth.js
 const businessRoutes = require('./src/routes/business'); // Correct path to business.js
 const partRoutes = require('./src/routes/part'); // Correct path to part.js
+const purchaseRoutes = require('./src/routes/purchase'); // Correct path to purchase.js
+const fetchRoutes = require('./src/routes/fetch'); // Import the fetch route for saving and fetching orders
 const fs = require('fs'); // Import fs for file system operations
 const path = require('path'); // Import path to handle file paths
 const helmet = require('helmet'); // Security middleware (optional)
@@ -80,6 +81,8 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use('/api/auth', authRoutes); // Register the auth routes with the /api/auth prefix
 app.use('/api/business', businessRoutes); // Register the business routes with the /api/business prefix
 app.use('/api/parts', partRoutes); // Register the part routes with the /api/parts prefix
+app.use('/api/purchase', purchaseRoutes); // Register the purchase routes with the /api/purchase prefix
+app.use('/api/fetch', fetchRoutes); // Assuming this is for saving orders
 
 // Home route
 app.get('/', (req, res) => {
