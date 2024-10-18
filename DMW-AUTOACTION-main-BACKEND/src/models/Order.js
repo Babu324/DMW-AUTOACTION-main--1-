@@ -23,6 +23,10 @@ const orderSchema = new mongoose.Schema({
       name: { type: String, required: true },
     }
   ],
+  status: {
+    type: String,
+    default: 'Pending' // Default status is set to 'Pending'
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', orderSchema);

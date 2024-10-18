@@ -21,6 +21,29 @@ router.post('/', async (req, res) => {
     }
 });
 
+// PATCH route to update order status
+router.patch('/orders/:id', async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body; // Expecting status to be sent in the body
+
+    try {
+        const updatedOrder = await Order.findByIdAndUpdate(
+            id, 
+            { status }, // Update the status field
+            { new: true } // Return the updated document
+        );
+        
+        if (!updatedOrder) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+        
+        res.json({ message: 'Order status updated successfully', order: updatedOrder });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to update order status', error: error.message });
+    }
+});
+
 // GET route to fetch all orders
 router.get('/orders', async (req, res) => {
     try {

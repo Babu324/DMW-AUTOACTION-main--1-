@@ -12,6 +12,7 @@ const UserHome = () => {
             <Header />
             <FCategorie />
             <Footer />
+            
         </>
     );
 };

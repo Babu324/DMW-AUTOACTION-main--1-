@@ -8,6 +8,7 @@ const businessRoutes = require('./src/routes/business'); // Correct path to busi
 const partRoutes = require('./src/routes/part'); // Correct path to part.js
 const purchaseRoutes = require('./src/routes/purchase'); // Correct path to purchase.js
 const fetchRoutes = require('./src/routes/fetch'); // Import the fetch route for saving and fetching orders
+const cartRoutes = require('./src/routes/mycart'); // Your cart route file
 const fs = require('fs'); // Import fs for file system operations
 const path = require('path'); // Import path to handle file paths
 const helmet = require('helmet'); // Security middleware (optional)
@@ -83,7 +84,7 @@ app.use('/api/business', businessRoutes); // Register the business routes with t
 app.use('/api/parts', partRoutes); // Register the part routes with the /api/parts prefix
 app.use('/api/purchase', purchaseRoutes); // Register the purchase routes with the /api/purchase prefix
 app.use('/api/fetch', fetchRoutes); // Assuming this is for saving orders
-
+app.use('/api/cart', cartRoutes);
 // Home route
 app.get('/', (req, res) => {
   res.send('Welcome to the DMW AutoAction API');

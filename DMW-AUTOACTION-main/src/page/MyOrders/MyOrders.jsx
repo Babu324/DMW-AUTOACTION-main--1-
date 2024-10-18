@@ -12,14 +12,12 @@ const MyOrders = () => {
         const fetchOrders = async () => {
             const token = localStorage.getItem('authToken'); // Get the JWT token from localStorage
 
-            // Check if token exists
             if (!token) {
                 setError('You need to be logged in to view orders.');
                 return;
             }
 
             try {
-                // Fetch orders specific to the logged-in user
                 const response = await axios.get('http://localhost:3001/api/fetch/orders', {
                     headers: {
                         Authorization: `Bearer ${token}` // Pass token in Authorization header
@@ -34,6 +32,35 @@ const MyOrders = () => {
         
         fetchOrders();
     }, []);
+
+    const handleApprove = async (orderId) => {
+        const token = localStorage.getItem('authToken');
+
+        if (!token) {
+            setError('You need to be logged in to approve orders.');
+            return;
+        }
+
+        try {
+            // Send a request to update the order status to "Approved"
+            const response = await axios.patch(`http://localhost:3001/api/fetch/orders/${orderId}`, 
+            { status: 'Approved' }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            // Update the orders state to reflect the new status
+            setOrders((prevOrders) =>
+                prevOrders.map((order) =>
+                    order._id === orderId ? { ...order, status: response.data.order.status } : order // Update order status correctly
+                )
+            );
+        } catch (error) {
+            console.error("Error approving order:", error.response?.data || error.message);
+            setError('Failed to approve order.'); // Set error state
+        }
+    };
 
     return (
         <div className="my-orders-container">
@@ -76,7 +103,13 @@ const MyOrders = () => {
                                     </ul>
                                 </div>
 
-                                <p><strong>Status:</strong> {order.status || 'Pending'}</p>
+                                <p><strong>Status:</strong> {order.status}</p>
+                                {/* Approve button only if status is not Approved */}
+                                {order.status !== 'Approved' && (
+                                    <button className="approve-button" onClick={() => handleApprove(order._id)}>
+                                        Approve
+                                    </button>
+                                )}
                             </li>
                         ))}
                     </ul>
