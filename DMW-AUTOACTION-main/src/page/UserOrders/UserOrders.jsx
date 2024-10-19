@@ -1,72 +1,43 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import './myorders.css'; 
-import Navbar from '../../page/UserNavbar/UserNavbar';
+import './userorders.css'; 
+import Navbar from '../../component/Navbar/Navbar';
 import Footer from '../../component/Footer/Footer';
 
-const MyOrders = () => {
+const UserOrder = () => {
     const [orders, setOrders] = useState([]);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        const fetchOrders = async () => {
-            const token = localStorage.getItem('authToken'); // Get the JWT token from localStorage
-
-            if (!token) {
-                setError('You need to be logged in to view orders.');
-                return;
-            }
-
-            try {
-                const response = await axios.get('http://localhost:3001/api/fetch/orders', {
-                    headers: {
-                        Authorization: `Bearer ${token}` // Pass token in Authorization header
-                    }
-                });
-                setOrders(response.data); // Set the fetched orders to state
-            } catch (error) {
-                console.error("Error fetching orders:", error.response?.data || error.message);
-                setError('Failed to fetch orders.'); // Set error state
-            }
-        };
-        
-        fetchOrders();
-    }, []);
-
-    const handleApprove = async (orderId) => {
-        const token = localStorage.getItem('authToken');
+    const fetchOrders = async () => {
+        const token = localStorage.getItem('authToken'); // Get the JWT token from localStorage
 
         if (!token) {
-            setError('You need to be logged in to approve orders.');
+            setError('You need to be logged in to view orders.');
             return;
         }
 
         try {
-            // Send a request to update the order status to "Approved"
-            const response = await axios.patch(`http://localhost:3001/api/fetch/orders/${orderId}`, 
-            { status: 'Approved' }, {
+            const response = await axios.get('http://localhost:3001/api/fetch/orders', {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}` // Pass token in Authorization header
                 }
             });
-
-            // Update the orders state to reflect the new status
-            setOrders((prevOrders) =>
-                prevOrders.map((order) =>
-                    order._id === orderId ? { ...order, status: response.data.order.status } : order // Update order status correctly
-                )
-            );
+            setOrders(response.data); // Set the fetched orders to state
         } catch (error) {
-            console.error("Error approving order:", error.response?.data || error.message);
-            setError('Failed to approve order.'); // Set error state
+            console.error("Error fetching orders:", error.response?.data || error.message);
+            setError('Failed to fetch orders.'); // Set error state
         }
     };
 
+    useEffect(() => {
+        fetchOrders();
+    }, []);
+
     return (
-        <div className="my-orders-container">
+        <div className="user-orders-container">
             <Navbar />
-            <div className="my-orders">
-                <h3>User Orders</h3>
+            <div className="user-orders">
+                <h3>My Orders</h3>
                 {error && <p className="error-message">{error}</p>} {/* Show error message if exists */}
                 {orders.length === 0 ? (
                     <p>No orders found.</p> // Display if no orders are present
@@ -104,12 +75,6 @@ const MyOrders = () => {
                                 </div>
 
                                 <p><strong>Status:</strong> {order.status}</p>
-                                {/* Approve button only if status is not Approved */}
-                                {order.status !== 'Approved' && (
-                                    <button className="approve-button" onClick={() => handleApprove(order._id)}>
-                                        Approve
-                                    </button>
-                                )}
                             </li>
                         ))}
                     </ul>
@@ -120,4 +85,4 @@ const MyOrders = () => {
     );
 };
 
-export default MyOrders;
+export default UserOrder;

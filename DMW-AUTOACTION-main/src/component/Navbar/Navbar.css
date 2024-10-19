@@ -112,3 +112,7 @@
     margin-top: 1rem;
   }
 }
+.my-order-icon {
+  font-size: 1.5rem; /* Adjust size as needed */
+  margin-right: 0.5rem; /* Add space between icon and text */
+}

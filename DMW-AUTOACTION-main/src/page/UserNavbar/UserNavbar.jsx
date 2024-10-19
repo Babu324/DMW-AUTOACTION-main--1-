@@ -3,18 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { HiMail } from "react-icons/hi";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { MdAccountCircle } from "react-icons/md";
-import { FaShoppingCart } from "react-icons/fa"; // Import cart icon
 import "./UserNavbar.css"; // Separate CSS for Navbar
 
 const UserNavbar = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [cartDropdownVisible, setCartDropdownVisible] = useState(false);
-  const [cartItemCount, setCartItemCount] = useState(0); // Set initial cart item count to 0
   const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
-    // Here, you would fetch the actual cart item count and user info
-    // Example: axios.get('/api/cart').then(response => setCartItemCount(response.data.count));
+    // Here, you would fetch the actual user info if needed
   }, []);
 
   const handleMouseEnter = () => {
@@ -23,14 +19,6 @@ const UserNavbar = () => {
 
   const handleMouseLeave = () => {
     setDropdownVisible(false);
-  };
-
-  const handleCartMouseEnter = () => {
-    setCartDropdownVisible(true);
-  };
-
-  const handleCartMouseLeave = () => {
-    setCartDropdownVisible(false);
   };
 
   const handleLogout = () => {
@@ -72,29 +60,10 @@ const UserNavbar = () => {
                 {dropdownVisible && (
                   <ul className="dropdown_menu">
                     <li>
-                      <Link to="/my-orders">My Orders</Link>
+                      <Link to="/my-orders">User Orders</Link>
                     </li>
-                    <li onClick={handleLogout} className="logout-option"> {/* Logout option */}
+                    <li onClick={handleLogout} className="logout-option">
                       Logout
-                    </li>
-                  </ul>
-                )}
-              </div>
-            </div>
-          </li>
-
-          <li className="cart" onMouseEnter={handleCartMouseEnter} onMouseLeave={handleCartMouseLeave}>
-            <div className="dropdown">
-              <FaShoppingCart className="cart_icon" />
-              {cartItemCount > 0 && (
-                <span className="cart_items_count">{cartItemCount}</span>
-              )}
-              <div>
-                <span className="account_title">Cart</span>
-                {cartDropdownVisible && (
-                  <ul className="dropdown_cart_menu">
-                    <li>
-                      <Link to="/cart">View Cart</Link>
                     </li>
                   </ul>
                 )}

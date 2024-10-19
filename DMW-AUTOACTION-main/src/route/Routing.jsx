@@ -17,7 +17,9 @@ import BodyPartsPrice from "../page/SubCatagory/Body/BodyPanel/bodyshellprice"
 import EandL from "../page/SubCatagory/Electrics&Lighting/EandL/E&L"
 import AlarmimmobilisersHorns from "../page/SubCatagory/Electrics&Lighting/EandL/AlarmimmobilisersHorns"
 import AlarmPartsPrice from "../page/SubCatagory/Electrics&Lighting/EandL/AlarmPartsPrice"
+import UserOrder from '../page/UserOrders/UserOrders'; // Adjust the import path
 import Cart from '../page/Cart/Cart';
+
 const Routing = () => {
   return (
     <>
@@ -40,6 +42,7 @@ const Routing = () => {
         <Route Component={AlarmimmobilisersHorns} path="/EandL_AlarmimmobilisersHorns" element={<AlarmimmobilisersHorns />} />
         <Route Component={AlarmPartsPrice} path="/EandL_AlarmPartsPrice" element={<AlarmPartsPrice />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/user-orders" element={<UserOrder />} /> {/* User view */}
       </Routes>
     </>
   );

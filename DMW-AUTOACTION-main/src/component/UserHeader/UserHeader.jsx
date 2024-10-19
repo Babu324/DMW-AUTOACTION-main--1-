@@ -1,6 +1,6 @@
 import React from "react";
 import "./UserHeader.css"; 
-import Search from '../UserSearch/UserSearch'; 
+ 
 
 const UserCarPartsBanner = () => {
   return (
@@ -18,11 +18,6 @@ const UserCarPartsBanner = () => {
         <div className="image-container">
           <img src="/car.png" alt="Car" />
         </div>
-      </div>
-      
-     
-      <div className="search-container">
-        <Search />
       </div>
     </div>
   );

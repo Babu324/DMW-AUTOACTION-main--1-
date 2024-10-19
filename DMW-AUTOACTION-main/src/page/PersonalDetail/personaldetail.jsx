@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './personaldetail.css';
 import Footer from '../../component/Footer/Footer';
-import UserNavbar from '../../page/UserNavbar/UserNavbar'; // Import the UserNavbar
+import Navbar from '../../component/Navbar/Navbar'; // Import the UserNavbar
 
 const PersonalDetail = () => {
   const location = useLocation();
@@ -75,7 +75,7 @@ const PersonalDetail = () => {
 
       console.log(response.data.message);
       setLoading(false);
-      navigate('/my-orders'); // Navigate to a confirmation page or similar
+      navigate('/user-orders'); // Navigate to a confirmation page or similar
     } catch (err) {
       console.error('Error saving data:', err);
       setError('Error saving data');
@@ -89,7 +89,7 @@ const PersonalDetail = () => {
 
   return (
     <div>
-      <UserNavbar /> {/* Replace the normal Navbar with UserNavbar */}
+      <Navbar /> {/* Replace the normal Navbar with UserNavbar */}
       <div className="form-container">
         <div className="personal-details">
           <h3>Personal Details</h3>
